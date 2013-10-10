@@ -167,7 +167,6 @@ int main(int argc, char *argv[]) {
 	if(s_flag == 0) {
 		unsigned char serial[0x100];
 		char *cpid_str;
-		int ret;
 
 		ret = libusb_get_string_descriptor_ascii(device->handle, device->desc.iSerialNumber, serial, sizeof(serial));
 		if(ret < 0) {
