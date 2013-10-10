@@ -16,6 +16,7 @@ Requirements:
 
 - OS X or Linux box
 - libusb/libusbx > 1.0.8
+- ARM toolchain (one with objcopy - Apple's will not suffice)
 
 Usage:
 
