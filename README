@@ -1,13 +1,29 @@
-What to know about the Bootrom Dumper Utility (BDU) :
-- you need a mac or linux box to use it / build it
-- libusb > 1.0.8 required
-- execute it with root privileges (sudo ./bdu)
-- by default compatible only with A4 devices : (iPhone 4, iPod 4G, iPad, AppleTV 2)
-     it's possible to extend the compatibility to older devices as well (iPhone 3Gs, iPod 3G) by changing:
-        * the offset to the call of usb_wait_for_image in payload.S
-        * exploit offsets in bdu.c
-     was too lazy to automate this stuff...
+Bootrom Dumper Utility (BDU)
 
-Happy Reverse Code Engeneering !
+Updated version of pod2g's tool. Automatically detects device in DFU mode and dumps the bootrom.
 
-~ pod2g
+Compatible Devices:
+
+- iPhone2,1 (s5l8920)
+- iPhone3,1 (s5l8930)
+- iPhone3,2 (s5l8930)
+- iPhone3,3 (s5l8930)
+- iPod3,1   (s5l8922)
+- iPod4,1   (s5l8930)
+- iPad1,1   (s5l8930)
+
+Requirements:
+
+- OS X or Linux box
+- libusb/libusbx > 1.0.8
+
+Usage:
+
+- Execute with root privileges: 
+
+sudo ./bdu
+
+If the device type cannot be detected automatically, try invoking with the -s flag:
+
+sudo ./bdu -s s5l8930
+

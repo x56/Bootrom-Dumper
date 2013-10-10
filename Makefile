@@ -1,22 +1,26 @@
 CC = gcc
-CFLAGS_OSX = -lusb-1.0 -framework CoreFoundation -framework IOKit -I./include
-CFLAGS_LNX =  -lusb-1.0
+
+OS = $(shell uname -s)
+ifeq ($(OS), Darwin)
+CFLAGS = -lusb-1.0 -framework CoreFoundation -framework IOKit -I./include
+endif
+ifeq ($(OS), Linux)
+CFLAGS = -lusb-1.0
+endif
+ifndef CFLAGS
+$(error Unsupported OS: Use Linux or OS X)
+endif
 
 all:
-		@echo 'ERROR: no platform defined.'
-		@echo 'LINUX USERS: make linux'
-		@echo 'MAC OS X USERS: make macosx'
-	
-macosx:
-		$(CC) bdu.c -o bdu $(CFLAGS_OSX)
+		$(CC) bdu.c -o bdu $(CFLAGS)
 		
-		arm-elf-as -mthumb --fatal-warnings -o payload.o payload.S
-		arm-elf-objcopy -O binary  payload.o payload.bin
+		arm-linux-gnu-as -mthumb --fatal-warnings -o payload.o payload.S
+		arm-linux-gnu-objcopy -O binary  payload.o payload.bin
 		rm payload.o
 
-linux:
-		$(CC) bdu.c -o bdu $(CFLAGS_LNX)
-		
-		arm-elf-as -mthumb --fatal-warnings -o payload.o payload.S
-		arm-elf-objcopy -O binary  payload.o payload.bin
-		rm payload.o
+clean:
+		-rm bdu
+		-rm payload.bin
+
+rebuild: clean all
+
